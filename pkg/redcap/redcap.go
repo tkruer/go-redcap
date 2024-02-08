@@ -14,30 +14,40 @@ type RedCapClient struct {
 	ResponseFormat string
 }
 
-func (r RedCapClient) DeleteArms() {
+func (r RedCapClient) DeleteArms() ([]byte, error) {
 	client := &http.Client{}
 	var formating = fmt.Sprintf("token=%d&content=arm&action=delete&format=%d&arms[0]=1", r.Token, r.ResponseFormat)
 
 	var data = strings.NewReader(formating)
-	req, err := http.NewRequest("POST", "http://example.com/redcap/api/", data)
+	req, err := http.NewRequest("POST", r.Url, data)
+
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Set("Accept", "application/json")
 	resp, err := client.Do(req)
+
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	defer resp.Body.Close()
+
 	bodyText, err := io.ReadAll(resp.Body)
+
 	if err != nil {
 		log.Fatal(err)
+
 	}
 	fmt.Printf("%s\n", bodyText)
+	return bodyText, nil
 }
 
-func (r RedCapClient) DeleteDags() {}
+func (r RedCapClient) DeleteDags() {
+
+}
 
 func (r RedCapClient) DeleteEvents() {}
 
