@@ -43,6 +43,14 @@ jobs:
           release_name: Release ${{ steps.semantic-version.outputs.version }}
           draft: false
           prerelease: false
-
+        
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        
       - name: Push Tags
-        run: git push --follow-tags
+        run: |
+            git remote set-url origin git@github.com:tkruer/go-redcap.git
+            git push --follow-tags
+        
