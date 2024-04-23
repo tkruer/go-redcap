@@ -36,7 +36,7 @@ jobs:
       - name: Create Release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           tag_name: ${{ steps.semantic-version.outputs.version }}
           release_name: Release ${{ steps.semantic-version.outputs.version }}
@@ -45,4 +45,3 @@ jobs:
 
       - name: Push Tags
         run: git push --follow-tags
-                
