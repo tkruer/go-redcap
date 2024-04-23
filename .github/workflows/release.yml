@@ -24,14 +24,15 @@ jobs:
         run: go build -v ./...
 
       - name: Automated Version Tagging
+        id: semantic-version  # Add this line
         uses: paulhatch/semantic-version@v4.0.2
         with:
-          branch: main  # Ensure this matches the branch configured above
-          tag_prefix: 'v'
-          major_pattern: '(MAJOR)'
-          minor_pattern: '(MINOR)'
-          format: '${major}.${minor}.${patch}'
-          bump_each_commit: false
+            branch: main
+            tag_prefix: 'v'
+            major_pattern: '(MAJOR)'
+            minor_pattern: '(MINOR)'
+            format: '${major}.${minor}.${patch}'
+            bump_each_commit: false
 
       - name: Create Release
         uses: actions/create-release@v1
