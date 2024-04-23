@@ -1,0 +1,48 @@
+name: Go Module Release
+
+on:
+  push:
+    branches:
+      - main  # Set your default branch here
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '^1.18'  # Set the Go version to match your project requirements
+
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Get dependencies
+        run: go mod tidy
+
+      - name: Build
+        run: go build -v ./...
+
+      - name: Automated Version Tagging
+        uses: paulhatch/semantic-version@v4.0.2
+        with:
+          branch: main  # Ensure this matches the branch configured above
+          tag_prefix: 'v'
+          major_pattern: '(MAJOR)'
+          minor_pattern: '(MINOR)'
+          format: '${major}.${minor}.${patch}'
+          bump_each_commit: false
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.semantic-version.outputs.version }}
+          release_name: Release ${{ steps.semantic-version.outputs.version }}
+          draft: false
+          prerelease: false
+
+      - name: Push Tags
+        run: git push --follow-tags
+                
