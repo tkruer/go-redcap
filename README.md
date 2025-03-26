@@ -22,10 +22,10 @@ import (
 func main() {
     // Create a new client
     client := redcap.RedCapClient{
-		URL:            "https://redcap.example.com/api/",
-		Token:          "YOUR_API_TOKEN",
-		ResponseFormat: "json",
-	}
+  URL:            "https://redcap.example.com/api/",
+  Token:          "YOUR_API_TOKEN",
+  ResponseFormat: "json",
+ }
     // Export events from a project
     client.ExportEvents()     
 }
@@ -52,8 +52,6 @@ Contributions are welcome! Please feel free to open an issue or submit a pull re
 ## Features
 
 Currently, these API calls are available:
-
-Certainly! Below are the markdown tables for the documentation, with a single column for the feature and a checkmark (✅) indicating the capability.
 
 ### Export
 
@@ -115,7 +113,6 @@ Certainly! Below are the markdown tables for the documentation, with a single co
 |--------------------------------|:---------:|
 | Generate next record name      |     ✅     |
 | Switch data access group       |     ✅     |
-
 
 ## License
 
