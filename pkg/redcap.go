@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -15,6 +16,10 @@ const (
 	XML  ResponseFormat = "xml"
 	CSV  ResponseFormat = "csv"
 )
+
+func (rf ResponseFormat) String() string {
+	return string(rf)
+}
 
 type BuilderType string
 
@@ -72,6 +77,14 @@ func parameterBuilder(parameters []string, builder BuilderType) string {
 		}
 		return formating
 	}
+}
+
+func buildForm(fields map[string]string) url.Values {
+	form := url.Values{}
+	for k, v := range fields {
+		form.Set(k, v)
+	}
+	return form
 }
 
 /*

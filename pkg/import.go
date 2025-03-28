@@ -19,34 +19,60 @@ Returns:
 
 	A byte slice containing the response from the REDCap API.
 */
-func (r *RedCapClient) ImportArms() ([]byte, error) {
-	// TODO: We need to come back to this and implement a loop to iterate over the parameters as a JSON builder
-	client := &http.Client{}
-	formating := fmt.Sprintf(`token=%s&content=arm&action=import&override=0&format=%s&data=[{\"arm_num\":\"1\",\"name\":\"Arm%201\"}]`, r.Token, r.ResponseFormat)
+// func (r *RedCapClient) ImportArms() ([]byte, error) {
+// 	// TODO: We need to come back to this and implement a loop to iterate over the parameters as a JSON builder
+// 	formating := fmt.Sprintf(`token=%s&content=arm&action=import&override=0&format=%s&data=[{\"arm_num\":\"1\",\"name\":\"Arm%201\"}]`, r.Token, r.ResponseFormat)
+//
+// 	data := strings.NewReader(formating)
+// 	req, err := http.NewRequest("POST", r.URL, data)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+//
+// 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+// 	req.Header.Set("Accept", "application/json")
+// 	resp, err := r.HTTPClient.Do(req)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+//
+// 	defer resp.Body.Close()
+//
+// 	bodyText, err := io.ReadAll(resp.Body)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	fmt.Printf("%s\n", bodyText)
+// 	return bodyText, nil
+// }
 
-	data := strings.NewReader(formating)
-	req, err := http.NewRequest("POST", r.URL, data)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Accept", "application/json")
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer resp.Body.Close()
-
-	bodyText, err := io.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("%s\n", bodyText)
-	return bodyText, nil
-}
-
+// func (r *RedCapClient) ImportArms(fields map[string]string) ([]byte, error) {
+// 	// Use builder to create form values
+// 	form := buildForm(fields)
+//
+// 	// Build HTTP request
+// 	req, err := http.NewRequest("POST", r.URL, strings.NewReader(form.Encode()))
+// 	if err != nil {
+// 		return nil, fmt.Errorf("creating request: %w", err)
+// 	}
+//
+// 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+// 	req.Header.Set("Accept", "application/json")
+//
+// 	resp, err := r.HTTPClient.Do(req)
+// 	if err != nil {
+// 		return nil, fmt.Errorf("sending request: %w", err)
+// 	}
+// 	defer resp.Body.Close()
+//
+// 	bodyText, err := io.ReadAll(resp.Body)
+// 	if err != nil {
+// 		return nil, fmt.Errorf("reading response: %w", err)
+// 	}
+//
+// 	return bodyText, nil
+// }
+//
 /*
 ImportDags imports data access groups into a REDCap project.
 

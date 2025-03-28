@@ -20,32 +20,32 @@ Returns:
 
 	A byte slice containing the response from the REDCap API.
 */
-func (r *RedCapClient) ExportArms() ([]byte, error) {
-	client := &http.Client{}
-	formating := fmt.Sprintf("token=%s&content=arm&format=%s", r.Token, r.ResponseFormat)
-
-	data := strings.NewReader(formating)
-	req, err := http.NewRequest("POST", r.URL, data)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Accept", "application/json")
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer resp.Body.Close()
-
-	bodyText, err := io.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return bodyText, nil
-}
+// func (r *RedCapClient) ExportArms() ([]byte, error) {
+// 	client := &http.Client{}
+// 	formating := fmt.Sprintf("token=%s&content=arm&format=%s", r.Token, r.ResponseFormat)
+//
+// 	data := strings.NewReader(formating)
+// 	req, err := http.NewRequest("POST", r.URL, data)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+//
+// 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+// 	req.Header.Set("Accept", "application/json")
+// 	resp, err := client.Do(req)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+//
+// 	defer resp.Body.Close()
+//
+// 	bodyText, err := io.ReadAll(resp.Body)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+//
+// 	return bodyText, nil
+// }
 
 /*
 ExportDags exports data access groups from a REDCap project.

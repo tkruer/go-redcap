@@ -19,33 +19,33 @@ Returns:
 
 	A byte slice containing the response from the REDCap API.
 */
-func (r *RedCapClient) DeleteArms(arms []string) ([]byte, error) {
-	client := &http.Client{}
-	builderType := BuilderType("arms")
-	params := parameterBuilder(arms, builderType)
-	formating := fmt.Sprintf("token=%s&content=arm&action=delete&format=%s&arms=%s", r.Token, r.ResponseFormat, params)
-
-	data := strings.NewReader(formating)
-	req, err := http.NewRequest("POST", r.URL, data)
-	if err != nil {
-		log.Fatal("Error creating HTTP request: ", err)
-	}
-
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Accept", "application/json")
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Fatal("Error sending HTTP request: ", err)
-	}
-	defer resp.Body.Close()
-
-	bodyText, err := io.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal("Error reading response body: ", err)
-	}
-
-	return bodyText, nil
-}
+// func (r *RedCapClient) DeleteArms(arms []string) ([]byte, error) {
+// 	client := &http.Client{}
+// 	builderType := BuilderType("arms")
+// 	params := parameterBuilder(arms, builderType)
+// 	formating := fmt.Sprintf("token=%s&content=arm&action=delete&format=%s&arms=%s", r.Token, r.ResponseFormat, params)
+//
+// 	data := strings.NewReader(formating)
+// 	req, err := http.NewRequest("POST", r.URL, data)
+// 	if err != nil {
+// 		log.Fatal("Error creating HTTP request: ", err)
+// 	}
+//
+// 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+// 	req.Header.Set("Accept", "application/json")
+// 	resp, err := client.Do(req)
+// 	if err != nil {
+// 		log.Fatal("Error sending HTTP request: ", err)
+// 	}
+// 	defer resp.Body.Close()
+//
+// 	bodyText, err := io.ReadAll(resp.Body)
+// 	if err != nil {
+// 		log.Fatal("Error reading response body: ", err)
+// 	}
+//
+// 	return bodyText, nil
+// }
 
 /*
 DeleteDags deletes data access groups from a REDCap project.
